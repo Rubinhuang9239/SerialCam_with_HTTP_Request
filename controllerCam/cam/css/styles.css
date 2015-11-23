@@ -1,0 +1,29 @@
+body {
+	background-color: rgb(131,190,164);
+	color: white;
+	padding: 120px;
+	font-family: Arial, Helvetica, sans-serif;}
+h1 {
+	font-family: typola, sans-serif;
+	background-color: rgb(255,65,110);
+	padding: 50px;
+	font-weight: lighter;
+	line-height: 1em;
+	font-size: 300%;}
+h3 {
+	background-color: DarkRed;
+	padding: inherit;}
+p {
+	font-size: 13pt;
+	font-weight: lighter;
+	background-color: white;
+	color: rgb(100,100,90);
+	padding: 50px;
+	line-height: 1.4em;}
+
+@font-face {
+	font-family: 'typola';
+	src: url('font/typola.ttf');}
+
+
+				

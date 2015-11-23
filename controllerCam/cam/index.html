@@ -1,0 +1,163 @@
+<html>
+  <head>
+    <title>2-axis cam</title>
+    <link href="css/styles.css" type="text/css" rel="stylesheet" />
+
+    <script src="libraries/p5.js" type="text/javascript"></script>
+    <script src="libraries/p5.dom.js" type="text/javascript"></script>
+    <script src="libraries/p5.sound.js" type="text/javascript"></script>
+    <script src="sketch.js" type="text/javascript"></script>
+
+    <style>
+
+    #logField{
+      /*margin: auto;*/
+      width: 40%;
+      padding: 20px;
+      text-align: center;
+      border-radius: 8px;
+      border: solid 1px #777;
+      background-color: rgba(255,255,255,0.2);
+      margin-bottom: 30px;
+      display: inline-table;
+    }
+
+    #checkPos{
+      width: 16%;
+      padding: 20px;
+      text-align: center;
+      border-radius: 8px;
+      border: solid 1px #F89;
+      background-color: rgba(255,105,125,0.5);
+      margin-bottom: 30px;
+      display: inline-table;
+      cursor: pointer;
+      opacity: 0.85;
+    }
+    #checkPos:hover{
+      opacity: 1;
+    }
+
+    #io{
+      width: 16%;
+      padding: 20px;
+      text-align: center;
+      border-radius: 8px;
+      border: solid 1px #98E;
+      background-color: rgba(125,105,225,0.5);
+      margin-bottom: 30px;
+      cursor: pointer;
+      opacity: 0.85;
+    }
+    #io:hover{
+      opacity: 1;
+    }
+
+    </style>
+
+    <script>
+    window.addEventListener("load",function(){
+    var sliderX = document.getElementById('sliderX');
+    var sliderY = document.getElementById('sliderY');
+
+    var checkPosBtn = document.getElementById('checkPos');
+
+    var ioBtn = document.getElementById('io');
+
+    sliderX.addEventListener('mouseup',function(){
+      //alert('hi');
+      sendData('X', xVal);
+    });
+    sliderY.addEventListener('mouseup',function(){
+      //alert('hi');
+      sendData('Y', yVal);
+    });
+
+    checkPosBtn.addEventListener('click',function(){
+      reqPos();
+    });
+
+    ioBtn.addEventListener('click',function(){
+      setIO();
+    });
+
+    });
+
+
+    function reqPos(){
+
+      httpGetAsync('GET', 'http://172.16.244.193:3000/getPos', function(res){
+      console.log('GET done');
+      var logBox = document.getElementById('logField');
+      var response = "@ ";
+      //console.log(res);
+      var pos = JSON.parse(res);
+      logBox.innerHTML = response + 'x: ' + pos.x + " | " + ' ' + 'y: ' + pos.y;
+      //logBox.innerHTML = response + res.x + ' ' + res.y;
+      });
+
+    }
+
+    function setIO(){
+      httpGetAsync('POST', 'http://172.16.244.193:3000/io', function(res){
+      console.log('POST I/O done');
+      });
+    }
+
+    function sendData(axis,val){
+      httpGetAsync('POST', 'http://172.16.244.193:3000/pos' + axis + '?' + val, function(){
+        console.log('POST done');
+      });
+      }
+
+
+    function httpGetAsync(method, theUrl, callback)
+    {
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.onreadystatechange = function() { 
+            if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+                callback(xmlHttp.responseText);
+        }
+        xmlHttp.open(method, theUrl, true); // true for asynchronous 
+        xmlHttp.send(null);
+    }
+    </script>
+
+
+  </head>
+  <body>
+    <h1>2-axis cam</h1>
+    <form name="input" action="save" method="get">
+
+      <div id = "logField">
+          - Waitting for log -
+      </div>
+
+      <div id = "checkPos"> Check Position </div>
+
+      <div id = "io"> I/O </div>
+
+      <br><br><br><br>
+
+        X-axis (changing horizontally)<br>
+        <!-- <input type="text" name="Q1"><br><br> !-->
+
+        <br><br><br><br>
+        Y-axis (changing vertically)<br>
+
+        <!--<input type="text" name="Q2"><br><br> !-->
+
+        <br><br><br><br><br>
+        <!-- If you done, click the submit below.<br><br>
+        <input type="submit" name="submit" value="submit"><br><br><br><br>
+        !-->
+
+        2015 Fall / Understanding Networks<br><br>by Rubin + Sehwan
+        
+    </form>
+  </body>
+</html>
+
+
+
+
