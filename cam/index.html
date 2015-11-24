@@ -56,6 +56,11 @@
     </style>
 
     <script>
+
+    
+    var URL = 'http://172.16.245.29:3000';
+
+
     window.addEventListener("load",function(){
     var sliderX = document.getElementById('sliderX');
     var sliderY = document.getElementById('sliderY');
@@ -83,10 +88,9 @@
 
     });
 
-
     function reqPos(){
 
-      httpGetAsync('GET', 'http://172.16.244.193:3000/getPos', function(res){
+      httpGetAsync('GET', URL+'/getPos', function(res){
       console.log('GET done');
       var logBox = document.getElementById('logField');
       var response = "@ ";
@@ -99,13 +103,13 @@
     }
 
     function setIO(){
-      httpGetAsync('POST', 'http://172.16.244.193:3000/io', function(res){
+      httpGetAsync('POST', URL+'/io', function(res){
       console.log('POST I/O done');
       });
     }
 
     function sendData(axis,val){
-      httpGetAsync('POST', 'http://172.16.244.193:3000/pos' + axis + '?' + val, function(){
+      httpGetAsync('POST', URL+'/pos' + axis + '?' + val, function(){
         console.log('POST done');
       });
       }

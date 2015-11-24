@@ -94,8 +94,9 @@ app.get('/getPos', function(req, res){
                     x : (rotateDataX-0),
                     y : (rotateDataY-230)
                     }
+  //res.writeHeader(200);
   res.send(currentPos);
-  res.send(200);
+  //res.send(200);
 });
 
 var io = false;
